@@ -12,40 +12,28 @@
 
 # include "filler.h"
 
-void ft_get_xy(char *input, int *stock)
+int main(void)
 {
-    int i;
-    int next;
-
-    i = 0;
-    next = 0;
-    stock[0] = 0;
-    stock[1] = 0;
-    while (input[i] != '\0')
-    {
-        while (ft_isdigit(input[i]))
-            stock[next] = stock[next] * 10 + (input[i++] - '0');
-        if (ft_isdigit(input[i - 1]) && input[i] != ':')
-            next++;
-        i++;
-    }
-}
-
-int main()
-{
-    char *line;
     t_data data;
 
-    get_next_line(0, &line);
-    if ((ft_strstr(line, "Plateau")))
-        ft_get_xy(line, data.xy_plateau);
-    else if ((ft_strstr(line, "Piece")))
-        ft_get_xy(line, data.xy_piece);
-    ft_printf("data.xy_plateau[0] : %d - data.xy_plateau[1] : %d\n", data.xy_plateau[0], data.xy_plateau[1]);
-    ft_printf("data.xy_piece[0] : %d - data.xy_piece[1] : %d\n", data.xy_piece[0], data.xy_piece[1]);
+    if (ft_get_input(&data) == -1)
+        return (-1);
     return (0);
 }
 
+/*
+int y;
+int k;
+ft_printf("================ MY_Content ================\n");
+ft_printf("data.xy_plateau[0] : %d - data.xy_plateau[1] : %d\n", data.xy_plateau[0], data.xy_plateau[1]);
+y = 0;
+while (y < data.xy_plateau[0])
+    ft_putendl(data.plateau[y++]);
+ft_printf("data.xy_piece[0] : %d - data.xy_piece[1] : %d\n", data.xy_piece[0], data.xy_piece[1]);
+k = 0;
+while (k < data.xy_piece[0])
+    ft_putendl(data.piece[k++]);
+*/
 
 /*
 Plateau 15 17:

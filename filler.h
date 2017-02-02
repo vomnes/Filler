@@ -26,8 +26,11 @@ typedef struct  s_data
 {
     int         xy_plateau[2];
     int         xy_piece[2];
+    char        **plateau;
+    char        **piece;
 }               t_data;
 
 int				get_next_line(const int fd, char **line);
+int    ft_get_input(t_data *data);
 
 #endif
