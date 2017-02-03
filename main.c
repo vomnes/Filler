@@ -50,19 +50,37 @@ int ft_get_coord_piece(t_data *data)
     return (1);
 }
 
-void ft_put_new(t_data *data, char content)
+void ft_check_new_pos(t_data *data)
 {
     int i;
     int zero_x;
     int zero_y;
 
     i = 0;
-    zero_x = data.coord[0].x;
-    zero_y = data.coord[0].y;
-    while (i < data.nb_coord)
+    zero_x = data->coord[0].x;
+    zero_y = data->coord[0].y;
+    while (i < data->nb_coord)
     {
         data->coord[i].new_x = data->check_pos_x + data->coord[i].x - zero_x,
         data->coord[i].new_y = data->check_pos_y + data->coord[i].y - zero_y;
+        if (data->coord[i].new_x < 0 || data->coord[i].new_y < 0)
+        {
+            ft_putendl("Wrong position");
+            exit(-1);
+        }
+        i++;
+    }
+}
+
+void ft_display_new_pos(t_data *data, char content)
+{
+    int i;
+
+    i = 0;
+    while (i < data->nb_coord)
+    {
+        ft_printf(">> %d - >> %d\n", data->coord[i].new_x, data->coord[i].new_y);
+        data->plateau[data->coord[i].new_y][data->coord[i].new_x] = content;
         i++;
     }
 }
@@ -71,12 +89,15 @@ int main(void)
 {
     t_data data;
 
-    data->check_pos_x = 0;
-    data->check_pos_y = 0;
+    data.check_pos_x = -1;
+    data.check_pos_y = -1;
     if (!ft_get_input(&data))
         return (-1);
     if (!ft_get_coord_piece(&data))
         return (-1);
+    ft_check_new_pos(&data);
+    ft_display_new_pos(&data, 'x');
+    ft_print_strtab(data.plateau);
     return (0);
 }
 
