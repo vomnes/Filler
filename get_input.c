@@ -65,6 +65,24 @@ void ft_count_coord(char *line, t_data *data)
     }
 }
 
+static void ft_gather_plateau_piece(t_data *data, char *line, int *y, int *k)
+{
+    if (ft_isdigit(line[0]))
+    {
+        if (ft_strchr(line, data->player_shape) && data->ok_min_y == 0)
+        {
+            data->min_y = *y;
+            data->ok_min_y = 1;
+        }
+        data->plateau[(*y)++] = ft_strdup(ft_strchr(line, ' ') + 1);
+    }
+    if (line[0] == '.' || line[0] == '*')
+    {
+        data->piece[(*k)++] = ft_strdup(line);
+        ft_count_coord(line, data);
+    }
+}
+
 int    ft_get_input(t_data *data)
 {
     int y;
@@ -82,13 +100,7 @@ int    ft_get_input(t_data *data)
         if (*line != 'P' && *line != ' ' && !ft_isdigit(*line) && *line != '.'
         && *line != '*')
             break ;
-        if (ft_isdigit(line[0]))
-            data->plateau[y++] = ft_strdup(ft_strchr(line, ' ') + 1);
-        if (line[0] == '.' || line[0] == '*')
-        {
-            data->piece[k++] = ft_strdup(line);
-            ft_count_coord(line, data);
-        }
+        ft_gather_plateau_piece(data, line, &y, &k);
         free(line);
     }
     data->plateau[y] = NULL;
