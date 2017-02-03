@@ -68,6 +68,52 @@ void ft_check_new_pos(t_data *data)
     }
 }
 
+int ft_check_foreach()
+{
+    int i;
+    char cell;
+    int empty_space;
+    int player_shape;
+
+    i = 0;
+    empty_space = 0;
+    player_shape = 0;
+    while (i < data->nb_coord)
+    {
+        cell = data->plateau[data->coord[i].new_y][data->coord[i].new_x];
+        if (cell == '.')
+            empty_space++;
+        else if (cell == data->player_shape)
+            player_shape++;
+    }
+    if (space == data->nb_coord)
+        return (1);
+}
+
+int ft_check_cell_content(t_data *data)
+{
+    int i;
+    char cell;
+
+    i = 0;
+    while (i < data->nb_coord)
+    {
+        cell = data->plateau[data->coord[i].new_y][data->coord[i].new_x];
+        if ()
+//        if (cell != data->player_shape)
+
+//        ft_printf(">> %d - >> %d\n", data->coord[i].new_x, data->coord[i].new_y);
+        i++;
+    }
+    if (data->pos_x + data->xy_piece[0] > data->xy_plateau[0])
+    {
+        x = 0;
+        y++;
+    }
+    if (data->pos_y + data->xy_piece[1] > data->xy_plateau[1])
+        return (0);
+}
+
 void ft_display_new_pos(t_data *data, char content)
 {
     int i;
@@ -94,7 +140,7 @@ int main(void)
     if (!ft_get_coord_piece(&data))
         return (-1);
     ft_printf("min_x >> %d\n", data.min_y);
-    ft_printf("x : %d # y : %d\n", data.check_pos_x, data.check_pos_y); 
+    ft_printf("x : %d # y : %d\n", data.check_pos_x, data.check_pos_y);
     ft_check_new_pos(&data);
     ft_display_new_pos(&data, 'x');
     ft_print_strtab(data.plateau);
