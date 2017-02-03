@@ -68,8 +68,11 @@ int ft_check_foreach(t_data *data)
 int ft_check_new_pos(t_data *data, int pos_x, int pos_y)
 {
     int i;
+    char cell;
 
     i = 0;
+    data->empty_space = 0;
+    data->nb_player_shape = 0;
     while (i < data->nb_coord)
     {
         if (pos_x + data->coord[i].x < 0 || pos_y + data->coord[i].y < 0)
@@ -79,8 +82,19 @@ int ft_check_new_pos(t_data *data, int pos_x, int pos_y)
             return (-1);
         data->coord[i].new_x = pos_x + data->coord[i].x,
         data->coord[i].new_y = pos_y + data->coord[i].y;
-        ft_printf("$[%d] > %2d - %2d\n", i, data->coord[i].new_x, data->coord[i].new_y);
+        cell = data->plateau[data->coord[i].new_y][data->coord[i].new_x];
+        if (cell == '.')
+            data->empty_space++;
+        else if (cell == data->player_shape)
+            data->nb_player_shape++;
+        //ft_printf("$[%d] > %2d - %2d\n", i, data->coord[i].new_x, data->coord[i].new_y);
         i++;
+    }
+    if (data->nb_player_shape > 0)
+    {
+        ft_printf("> pos_x : %2d | pos_y : %2d | ", pos_x, pos_y);
+        ft_printf("empty_space >> %d - nb_player_shape >> %d\n",
+        data->empty_space, data->nb_player_shape);
     }
     return (1);
 }
@@ -95,10 +109,10 @@ int ft_check_cell_content(t_data *data)
     while (pos_x != data->xy_plateau[1] && pos_y != data->xy_plateau[0])
     {
         pos_x = 0;
-        while (pos_x < data->xy_plateau[1] - data->xy_piece[0])
+        while (pos_x <= data->xy_plateau[1] - data->xy_piece[1])
         {
-            ft_printf("> %d :: %d\n", pos_x, pos_y);
-            ft_check_new_pos(data, pos_x, pos_y);
+            if (pos_y < data->xy_plateau[0] - data->xy_piece[0] + 1)
+                ft_check_new_pos(data, pos_x, pos_y);
             pos_x++;
         }
         pos_y++;
