@@ -40,7 +40,7 @@ int ft_get_coord_piece(t_data *data)
     }
     return (1);
 }
-
+/*
 int ft_check_foreach(t_data *data)
 {
     int i;
@@ -64,15 +64,19 @@ int ft_check_foreach(t_data *data)
 //        return (1);
     return (0);
 }
-
+*/
 int ft_check_new_pos(t_data *data, int pos_x, int pos_y)
 {
     int i;
     char cell;
+    int tmp_empty;
+    int tmp_shape;
 
     i = 0;
     data->empty_space = 0;
     data->nb_player_shape = 0;
+    data->tmp_empty = 0;
+    data->tmp_shape = 0;
     while (i < data->nb_coord)
     {
         if (pos_x + data->coord[i].x < 0 || pos_y + data->coord[i].y < 0)
@@ -92,10 +96,17 @@ int ft_check_new_pos(t_data *data, int pos_x, int pos_y)
     }
     if (data->nb_player_shape > 0)
     {
-        ft_printf("> pos_x : %2d | pos_y : %2d | ", pos_x, pos_y);
-        ft_printf("empty_space >> %d - nb_player_shape >> %d\n",
-        data->empty_space, data->nb_player_shape);
+//        ft_printf("> pos_x : %2d | pos_y : %2d | ", pos_x, pos_y);
+//        ft_printf("empty_space >> %d - nb_player_shape >> %d\n",
+//        data->empty_space, data->nb_player_shape);
+        if (data->empty_space > data->tmp_empty &&
+        data->nb_player_shape > data->tmp_shape)
+        {
+            data->final_pos_x = pos_x;
+            data->final_pos_y = pos_y;
+        }
     }
+//    ft_printf(">>%d<< >>%d<<\n", data->final_pos_x, data->final_pos_y);
     return (1);
 }
 
@@ -127,8 +138,8 @@ void ft_display_new_pos(t_data *data, char content)
     i = 0;
     while (i < data->nb_coord)
     {
-    //    ft_printf("##>> %d - >> %d\n", data->coord[i].x, data->coord[i].y);
-    //    ft_printf("##>> %d - >> %d\n", data->coord[i].new_x, data->coord[i].new_y);
+        data->coord[i].new_x = data->final_pos_x + data->coord[i].x,
+        data->coord[i].new_y = data->final_pos_y + data->coord[i].y;
         data->plateau[data->coord[i].new_y][data->coord[i].new_x] = content;
         i++;
     }
