@@ -67,6 +67,7 @@ void ft_count_coord(char *line, t_data *data)
 
 static void ft_gather_plateau_piece(t_data *data, char *line, int *y, int *k)
 {
+    data->ok_min_y = 0;
     if (ft_isdigit(line[0]))
     {
         if (ft_strchr(line, data->player_shape) && data->ok_min_y == 0)
