@@ -36,16 +36,26 @@ typedef struct  s_data
     int         xy_piece[2];
     char        **plateau;
     char        **piece;
+    int         num_player;
     int         nb_coord;
     int         min_y;
     int         ok_min_y;
     t_coord     *coord;
-    int         check_pos_x;
-    int         check_pos_y;
+    int         final_pos_x;
+    int         final_pos_y;
     char        player_shape;
+    int         empty_space;
+    int         tmp_empty;
+    int         nb_player_shape;
+    int         tmp_shape;
 }               t_data;
 
 int			get_next_line(const int fd, char **line);
 int         ft_get_input(t_data *data);
+
+int ft_get_coord_piece(t_data *data);
+int ft_get_best_position(t_data *data);
+void ft_display_position(t_data *data, char content);
+int ft_get_data(t_data *data);
 
 #endif
