@@ -23,15 +23,16 @@ int ft_get_coord_piece(t_data *data)
     y = 0;
     if (!(data->coord = (t_coord*)malloc(sizeof(t_coord) * data->nb_coord)))
         return (-1);
-    while (data->piece[y])
+    while (y < data->xy_piece[0])
     {
         x = 0;
-        while (data->piece[y][x])
+        while (x < data->xy_piece[1])
         {
             if (data->piece[y][x] == '*')
             {
                 data->coord[i].x = x;
                 data->coord[i].y = y;
+            //    ft_printf("i = %d >>%d<< >>%d<<\n", i, data->coord[i].x, data->coord[i].y);
                 i++;
             }
             x++;
@@ -47,13 +48,14 @@ static int ft_position_foreach(t_data *data, int pos_x, int pos_y)
     char cell;
 
     i = 0;
+    //ft_printf("data->nb_coord : %d\n", data->nb_coord);
+    //ft_printf(">>%d<< >>%d<<\n", data->empty_space, data->nb_player_shape);
     while (i < data->nb_coord)
     {
-        if (pos_x + data->coord[i].x < 0 || pos_y + data->coord[i].y < 0)
-            return (-1);
-        if (pos_x + data->coord[i].x > data->xy_plateau[1] ||
-            pos_y + data->coord[i].y > data->xy_plateau[0])
-            return (-1);
+    //    if (pos_x + data->coord[i].x < 0 || pos_y + data->coord[i].y < 0)
+    //        return (-1);
+    //    if (pos_x + data->coord[i].x > data->xy_plateau[1] || pos_y + data->coord[i].y > data->xy_plateau[0])
+    //        return (-1);
         data->coord[i].new_x = pos_x + data->coord[i].x,
         data->coord[i].new_y = pos_y + data->coord[i].y;
         cell = data->plateau[data->coord[i].new_y][data->coord[i].new_x];
@@ -61,15 +63,17 @@ static int ft_position_foreach(t_data *data, int pos_x, int pos_y)
             data->empty_space++;
         else if (cell == data->player_shape)
             data->nb_player_shape++;
-            i++;
+        i++;
     }
+//    ft_printf(">>%d<< >>%d<< -- x : %d || y : %d\n", data->empty_space, data->nb_player_shape, pos_x, pos_y);
     return (1);
 }
 
 static void ft_strategy(t_data *data, int pos_x, int pos_y)
 {
-    if (data->nb_player_shape > 0)
+    if (data->nb_player_shape == 1 && data->empty_space + 1 == data->nb_coord)
     {
+    //    ft_printf(">>%d<< >>%d<< -- x : %d || y : %d\n", data->empty_space, data->nb_player_shape, pos_x, pos_y);
         if (data->empty_space > data->tmp_empty &&
         data->nb_player_shape > data->tmp_shape)
         {
@@ -116,7 +120,7 @@ int ft_get_best_position(t_data *data)
         }
         pos_y++;
     }
-//    ft_printf(">>%d<< >>%d<<\n", data->final_pos_x, data->final_pos_y);
+//    ft_printf("GET_DATA-->>%d<< >>%d<<\n", data->empty_space, data->nb_player_shape);
     return (1);
 }
 

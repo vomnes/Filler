@@ -12,36 +12,23 @@
 
 # include "filler.h"
 
-void ft_print_strtab(char **tab)
-{
-    int i;
-
-    i = 0;
-    while (tab[i] != NULL)
-        ft_putendl(tab[i++]);
-}
-
 int main(void)
 {
     t_data data;
 
-    data.final_pos_x = 0;
-    data.final_pos_y = 0;
-    data.ok_min_y = 0;
-    data.player_shape = 'O';
-    if (!ft_get_input(&data))
-        return (-1);
-    if (!ft_get_coord_piece(&data))
-        return (-1);
+    data.player_shape = data.num_player == 2 ? 'X' : 'O';
+    ft_get_data(&data);
+//    if (!ft_get_coord_piece(&data))
+//        return (-1);
 //    ft_printf("min_x >> %d\n", data.min_y);
 //    ft_printf("x : %d # y : %d\n", data.check_pos_x, data.check_pos_y);
-    if (!ft_get_best_position(&data))
-        return (-1);
-//    ft_check_new_pos(&data);
-    ft_display_position(&data, 'o');
-    ft_print_strtab(data.plateau);
+//    if (!ft_get_best_position(&data))
+//        return (-1);
     return (0);
 }
+
+//    ft_display_position(&data, data.player_shape + 32);
+//    ft_print_strtab(data.plateau);
 
 //data->plateau[y][x]
 //data->piece[k][z]
@@ -52,20 +39,59 @@ Plateau 15 17:
 000 .................
 001 .................
 002 .................
+003 .....OO..........
+004 .................
+005 .................
+006 .................
+007 .................
+008 .................
+009 .................
+010 .................
+011 .................
+012 ..............X..
+013 .................
+014 .................
+Piece 2 3:
+..*
+***
+<got (O): [10, 2]
+Plateau 15 17:
+    01234567890123456
+000 .................
+001 .................
+002 .................
 003 .................
 004 .................
 005 .................
 006 .................
 007 .................
-008 ..O..............
-009 ..O..............
-010 ..O..............
-011 .............xx..
-012 .............XX..
+008 ..OOOOO..........
+009 .....OO.xxxXXX...
+010 .....OO.XXXXXX...
+011 .....OOOOOOOXXX..
+012 ...........OO.X..
 013 .................
 014 .................
-Piece 2 3:
+Piece 1 3:
 ***
-**.
-<got (O): [10, 2]
+Plateau 15 17:
+    01234567890123456
+000 .................
+001 .................
+002 .................
+003 ...............X.
+004 .......xxXXXXXXX.
+005 ......XXXXXXXXXX.
+006 ......XXXXXXXXXX.
+007 ....OOOOXXXXXXX..
+008 ..OOOOOOXXXXXXX..
+009 .......OOOXXXXX..
+010 ......OOOOOOXXX..
+011 .......OOOOXXXXXX
+012 ......OOOOOXXOX..
+013 ...OOOOOOOOOOOOO.
+014 .OOOOOOOOOOOOOOOO
+Piece 2 2:
+**
+**
 */

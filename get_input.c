@@ -52,19 +52,6 @@ static int ft_size_tab(char *line, t_data *data)
     return (0);
 }
 
-void ft_count_coord(char *line, t_data *data)
-{
-    int i;
-
-    i = 0;
-    while (line[i])
-    {
-        if (line[i] == '*')
-            data->nb_coord++;
-        i++;
-    }
-}
-
 static void ft_gather_plateau_piece(t_data *data, char *line, int *y, int *k)
 {
     data->ok_min_y = 0;
@@ -84,6 +71,33 @@ static void ft_gather_plateau_piece(t_data *data, char *line, int *y, int *k)
     }
 }
 
+void ft_count_coord(char *line, t_data *data)
+{
+    int i;
+
+    i = 0;
+    while (line[i])
+    {
+        if (line[i] == '*')
+            data->nb_coord++;
+        i++;
+    }
+}
+
+static void ft_get_number_player(t_data *data, char *line)
+{
+    int i;
+
+    i = 0;
+    if (line[0] == '$')
+        if (ft_strstr(line, "vomnes.filler"))
+            while (line[i++])
+                if (line[i] == 'p' && ft_isdigit(line[i + 1]))
+                    data->num_player = line[i + 1] - '0';
+}
+
+//$$$ exec p2 : [vomnes.filler]
+
 int    ft_get_input(t_data *data)
 {
     int y;
@@ -94,17 +108,28 @@ int    ft_get_input(t_data *data)
     k = 0;
     line = NULL;
     data->nb_coord = 0;
+    data->num_player = 0;
     while (get_next_line(0, &line) > 0)
     {
+        ft_get_number_player(data, line);
+    //  ft_printf(">> %d\n", data->num_player);
         if (ft_size_tab(line, data) == -1)
             return (-1);
-        if (*line != 'P' && *line != ' ' && !ft_isdigit(*line) && *line != '.'
-        && *line != '*')
-            break ;
         ft_gather_plateau_piece(data, line, &y, &k);
+        if ()
+        {
+            data->final_pos_x = 0;
+            data->final_pos_y = 0;
+            data->ok_min_y = 0;
+            if (!ft_get_coord_piece(data))
+                return (-1);
+            if (!ft_get_best_position(data))
+                return (-1);
+            ft_printf("%d %d\n", data->final_pos_y, data->final_pos_x);
+        }
         free(line);
+        data->plateau[y] = NULL;
+        data->piece[k] = NULL;
     }
-    data->plateau[y] = NULL;
-    data->piece[k] = NULL;
     return (1);
 }
