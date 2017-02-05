@@ -1,5 +1,14 @@
 # include "filler.h"
 
+void ft_print_strtab(char **tab)
+{
+    int i;
+
+    i = 0;
+    while (tab[i] != NULL)
+        ft_putendl(tab[i++]);
+}
+
 static void ft_get_xy(char *input, int *stock)
 {
     int i;
@@ -40,11 +49,12 @@ static int ft_get_plateau(t_data *data, char *line)
     str = NULL;
     if ((ft_strstr(line, "Plateau")))
     {
+        data->final_pos_y = 0;
+        data->final_pos_x = 0;
         ft_get_xy(line, data->xy_plateau);
         if (!(data->plateau = (char**)ft_memalloc(sizeof(*data->plateau)
         * (data->xy_plateau[0] + 1))))
             return (-1);
-//        ft_printf("--->1\n");
         get_next_line(0, &str);
         while (i < data->xy_plateau[0])
         {
@@ -57,13 +67,9 @@ static int ft_get_plateau(t_data *data, char *line)
             data->plateau[i] = ft_strdup(ft_strchr(str, ' ') + 1);
             i++;
         }
-//        ft_printf("--->2\n");
-//        ft_printf("---> %s\n", data->plateau[0]);
-//        ft_printf("XXx : %d # y : %d\n", data->final_pos_x, data->final_pos_y);
         free(str);
         data->plateau[i] = NULL;
     }
-//    ft_printf("XXx : %d # y : %d\n", data->final_pos_x, data->final_pos_y);
     return (0);
 }
 
@@ -87,33 +93,29 @@ static int ft_get_piece(t_data *data, char *line)
 
     i = 0;
     str = NULL;
-//    ft_printf("\n--->Piece\n");
-//    ft_putchar('|');
-//    ft_putendl(line);
-//    ft_putchar('|');
     if ((ft_strstr(line, "Piece")))
     {
-//        ft_printf("--->3\n");
         ft_get_xy(line, data->xy_piece);
-//        ft_printf("--->5\n");
         if (!(data->piece = (char**)ft_memalloc(sizeof(*data->piece)
         * (data->xy_piece[0] + 1))))
             return (-1);
-//        ft_printf("--->6\n");
-        while (i < data->xy_piece[0] - 1)
+        ft_printf("\nmy_line__ --> %s\n", line);
+        while (i < data->xy_piece[0])
         {
             get_next_line(0, &str);
-//            ft_printf("--::: %s\n", str);
+            ft_printf("%d < %d", i, data->xy_piece[0]);
+            ft_printf("\nmy_line --> %s\n", str);
             data->piece[i] = ft_strdup(str);
+            ft_printf("my_data --> %s\n", data->piece[i]);
             i++;
             ft_count_coord(str, data);
         }
-//        ft_printf("--->4\n");
         free(str);
         data->piece[i] = NULL;
         ft_get_coord_piece(data);
         ft_get_best_position(data);
         ft_printf("%d %d\n", data->final_pos_y, data->final_pos_x);
+        ft_print_strtab(data->piece);
     }
     return (0);
 }
