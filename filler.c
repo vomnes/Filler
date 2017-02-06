@@ -6,7 +6,7 @@ void ft_print_strtab(char **tab)
 
     i = 0;
     while (tab[i] != NULL)
-        ft_putendl(tab[i++]);
+        ft_putendl_fd(tab[i++], 2);
 }
 
 void ft_free_strtab(char **tab)
@@ -62,6 +62,7 @@ static int ft_get_plateau(t_data *data, char *line)
     str = NULL;
     if ((ft_strstr(line, "Plateau")))
     {
+        data->ok_get_piece = 0;
         ft_get_xy(line, data->xy_plateau);
         if (!(data->plateau = (char**)ft_memalloc(sizeof(*data->plateau)
         * (data->xy_plateau[0] + 1))))
@@ -106,6 +107,7 @@ static int ft_get_piece(t_data *data, char *line)
     str = NULL;
     if ((ft_strstr(line, "Piece")))
     {
+    //    ft_print_strtab(data->plateau);
         ft_get_xy(line, data->xy_piece);
         if (!(data->piece = (char**)ft_memalloc(sizeof(*data->piece)
         * (data->xy_piece[0] + 1))))
@@ -119,20 +121,25 @@ static int ft_get_piece(t_data *data, char *line)
         }
         free(str);
         data->piece[i] = NULL;
+        data->ok_get_piece = 1;
         data->final_pos_x = 0;
         data->final_pos_y = 0;
-        ft_get_coord_piece(data);
-        ft_get_best_position(data);
-    //    ft_print_strtab(data->piece);
-        ft_putnbr(data->final_pos_y);
-        ft_putchar(' ');
-        ft_putnbr(data->final_pos_x);
-        ft_putchar('\n');
-    //    ft_printf("%d %d\n", data->final_pos_y, data->final_pos_x); --> Kill Filler Segfault
-        ft_free_strtab(data->plateau);
-        //ft_printf(">>%d<<\n", data->nb_coord);
-        data->nb_coord = 0;
-    //    ft_free_strtab(data->piece);
+        if (data->ok_get_piece == 1)
+        {
+            ft_get_coord_piece(data);
+            ft_get_best_position(data);
+        //    ft_print_strtab(data->piece);
+            ft_putnbr(data->final_pos_y);
+            ft_putchar(' ');
+            ft_putnbr(data->final_pos_x);
+            ft_putchar('\n');
+        //    ft_print_strtab(data->plateau);
+        //    ft_printf("%d %d\n", data->final_pos_y, data->final_pos_x); --> Kill Filler Segfault
+            //ft_printf(">>%d<<\n", data->nb_coord);
+            data->nb_coord = 0;
+        //    ft_print_strtab(data->plateau);
+        //    ft_print_strtab(data->piece);
+        }
     }
     return (0);
 }
@@ -147,9 +154,14 @@ int ft_get_data(t_data *data)
     {
         data->empty_space = 0;
         data->nb_player_shape = 0;
+    //    ft_putendl_fd("One", 2);
+    //    ft_putendl_fd(line, 2);
         ft_get_number_player(data, line);
+    //    ft_putendl_fd("Two", 2);
         ft_get_plateau(data, line);
+    //    ft_putendl_fd("Three", 2);
         ft_get_piece(data, line);
+    //    ft_putendl_fd("Four", 2);
     //    ft_printf("GET_DATA-->>%d<< >>%d<<\n", data->empty_space, data->nb_player_shape);
     //    ft_printf(">>%d<< >>%d<<\n", data->final_pos_x, data->final_pos_y);
     //    ft_printf(">>%d<< >>%d<<\n", data->xy_plateau[0], data->xy_plateau[1]);

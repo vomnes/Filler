@@ -12,7 +12,7 @@
 
 # include "filler.h"
 
-int ft_get_coord_piece(t_data *data)
+int ft_get_coord_piece(t_data *d)
 {
     int i;
     int x;
@@ -21,24 +21,30 @@ int ft_get_coord_piece(t_data *data)
     i = 0;
     x = 0;
     y = 0;
-    if (!(data->coord = (t_coord*)malloc(sizeof(t_coord) * data->nb_coord)))
+    d->max_x_piece = 0;
+    d->max_y_piece = 0;
+    if (!(d->coord = (t_coord*)malloc(sizeof(t_coord) * d->nb_coord)))
         return (-1);
-    while (y < data->xy_piece[0])
+    while (y < d->xy_piece[0])
     {
         x = 0;
-        while (x < data->xy_piece[1])
+        while (x < d->xy_piece[1])
         {
-            if (data->piece[y][x] == '*')
+            if (d->piece[y][x] == '*')
             {
-                data->coord[i].x = x;
-                data->coord[i].y = y;
-            //    ft_printf("i = %d >>%d<< >>%d<<\n", i, data->coord[i].x, data->coord[i].y);
+                d->coord[i].x = x;
+                d->coord[i].y = y;
+                d->max_x_piece = d->max_x_piece < x ? x : d->max_x_piece;
+                d->max_y_piece = d->max_y_piece < y ? y : d->max_y_piece;
+            //    ft_printf("i = %d >>%d<< >>%d<<\n", i, d->coord[i].x, d->coord[i].y);
                 i++;
             }
             x++;
         }
         y++;
     }
+    dprintf(2, "d->max_x_piece >> %d\n", d->max_x_piece);
+    dprintf(2, "d->max_y_piece >> %d\n", d->max_y_piece);
     return (1);
 }
 
@@ -58,14 +64,19 @@ static int ft_position_foreach(t_data *data, int pos_x, int pos_y)
     //        return (-1);
         data->coord[i].new_x = pos_x + data->coord[i].x,
         data->coord[i].new_y = pos_y + data->coord[i].y;
+    //    dprintf(2, "new_x : %2d | new_y : %2d -- x : %2d | y : %2d\n",
+    //    data->coord[i].new_x, data->coord[i].new_y, pos_x, pos_y);
         cell = data->plateau[data->coord[i].new_y][data->coord[i].new_x];
+    //    ft_putchar(cell);
         if (cell == '.')
             data->empty_space++;
-        else if (cell == data->player_shape)
+        if (cell == data->player_shape)
             data->nb_player_shape++;
         i++;
     }
-//    ft_printf(">>%d<< >>%d<< -- x : %d || y : %d\n", data->empty_space, data->nb_player_shape, pos_x, pos_y);
+    //ft_putchar('\n');
+//    write(2, "check\n", ft_strlen("check\n"));
+    dprintf(2, "data->empty_space --> %d | data->nb_player_shape --> %d - posx : %d - posy : %d\n", data->empty_space, data->nb_player_shape, pos_x, pos_y);
     return (1);
 }
 
@@ -73,9 +84,8 @@ static void ft_strategy(t_data *data, int pos_x, int pos_y)
 {
     if (data->nb_player_shape == 1 && data->empty_space + 1 == data->nb_coord)
     {
-    //    ft_printf(">>%d<< >>%d<< -- x : %d || y : %d\n", data->empty_space, data->nb_player_shape, pos_x, pos_y);
-        if (data->empty_space > data->tmp_empty &&
-        data->nb_player_shape > data->tmp_shape)
+    //    printf(">>%d<< >>%d<< -- x : %d || y : %d\n", data->empty_space, data->nb_player_shape, pos_x, pos_y);
+        if (data->empty_space > data->tmp_empty)
         {
             data->final_pos_x = pos_x;
             data->final_pos_y = pos_y;
@@ -89,8 +99,7 @@ static int ft_positions(t_data *data, int pos_x, int pos_y)
     data->nb_player_shape = 0;
     data->tmp_empty = 0;
     data->tmp_shape = 0;
-    if(!ft_position_foreach(data, pos_x, pos_y))
-        return (-1);
+    ft_position_foreach(data, pos_x, pos_y);
     ft_strategy(data, pos_x, pos_y);
     return (1);
 }
@@ -107,13 +116,13 @@ int ft_get_best_position(t_data *data)
     int pos_y;
 
     pos_x = 0;
-    pos_y = data->min_y - data->xy_piece[0] + 1;
-    while (pos_x != data->xy_plateau[1] && pos_y != data->xy_plateau[0])
+    pos_y = 0;//data->min_y - data->xy_piece[0] + 1;
+    while (pos_y < data->xy_plateau[0] - data->max_y_piece)
     {
         pos_x = 0;
-        while (pos_x <= data->xy_plateau[1] - data->xy_piece[1])
+        while (pos_x < data->xy_plateau[1] - data->max_x_piece)
         {
-            if (pos_y < data->xy_plateau[0] - data->xy_piece[0] + 1)
+            if (pos_y < data->xy_plateau[0] - data->max_y_piece)
                 if (!ft_positions(data, pos_x, pos_y))
                     return (-1);
             pos_x++;
