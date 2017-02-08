@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 17:48:20 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/08 11:55:26 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/08 16:19:54 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,7 @@ static int ft_get_plateau(t_data *data, char *line)
         }
         free(str);
         data->plateau[i] = NULL;
-		ft_get_coord(data, data->player_coord, data->player_shape);
-		ft_get_coord(data, data->enemy_coord, data->enemy_shape);
-		i = 0;
-		ft_putchar_fd('\n', 2);
-		while (i++ < 4)
-			dprintf(2, "player_coord[%d].x = %d | player_coord[%d].y = %d\n", i, data->player_coord[i].x, data->player_coord[i].y, i);  
-//		ft_print_strtab(data->plateau);
+		ft_global_centroid(data);
     }
     return (0);
 }

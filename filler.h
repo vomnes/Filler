@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 15:19:25 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/08 11:51:46 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/08 16:19:05 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ typedef struct  s_coord_4
     int         y;
 	short       ok_pick_up;
 }               t_coord_4;
+
+typedef struct	s_centroid
+{
+	int			x_1;
+	int			y_1;
+	int			x_2;
+	int			y_2;
+	int			x;
+	int			y;
+}				t_centroid;
 
 typedef struct  s_data
 {
@@ -55,12 +65,16 @@ typedef struct  s_data
     int         max_y_piece;
 	t_coord_4	player_coord[4];
 	t_coord_4   enemy_coord[4];
+	t_centroid	player_centroid;
+	t_centroid  enemy_centroid;
+	int			centroid_x;
+	int			centroid_y;
 }               t_data;
 
 int			get_next_line(const int fd, char **line);
 int         ft_get_input(t_data *data);
 
-void ft_get_coord(t_data *data, t_coord_4 coord[4], char shape);
+void ft_global_centroid(t_data *data);
 int ft_get_coord_piece(t_data *data);
 int ft_get_best_position(t_data *data);
 void ft_display_position(t_data *data, char content);
