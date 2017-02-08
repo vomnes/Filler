@@ -6,13 +6,13 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 15:32:27 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/08 09:33:28 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/08 19:18:32 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "filler.h"
 
-int ft_get_coord_piece(t_data *d)
+static int ft_get_coord_piece(t_data *d)
 {
     int i;
     int x;
@@ -69,11 +69,31 @@ static void ft_strategy(t_data *data, int pos_x, int pos_y)
 {
     if (data->nb_player_shape == 1 && data->empty_space + 1 == data->nb_coord)
     {
-        if (data->empty_space > data->tmp_empty)
+		dprintf(2, "pos_x -> %d | pos_y -> %d\n", pos_x, pos_y);
+        data->final_pos_x = pos_x;
+        data->final_pos_y = pos_y;
+        if (data->move.ok_left_up == 0)
         {
-            data->final_pos_x = pos_x;
-            data->final_pos_y = pos_y;
+            data->move.left_up_x = pos_x;
+            data->move.left_up_y = pos_y;
+            data->move.ok_left_up = 1;
         }
+        if (pos_x > data->move.right_up_x)
+        {
+            data->move.right_up_x = pos_x;
+            data->move.right_up_y = pos_y;
+        }
+        if (pos_x <= data->move.left_down_x)
+        {
+            data->move.left_down_x = pos_x;
+            data->move.left_down_y = pos_y;
+        }
+        data->move.right_down_x = pos_x;
+        data->move.right_down_y = pos_y;
+		dprintf(2, "data->move.left_up_x : %d - data->move.left_up_y : %d\n", data->move.left_up_x, data->move.left_up_y);
+		dprintf(2, "data->move.right_up_x : %d - data->move.right_up_y : %d\n", data->move.right_up_x, data->move.right_up_y);
+		dprintf(2, "data->move.left_down_x : %d - data->move.left_down_y : %d\n", data->move.left_down_x, data->move.left_down_y);
+		dprintf(2, "data->move.right_down_x : %d - data->move.right_down_y : %d\n", data->move.right_down_x, data->move.right_down_y);
     }
 }
 
@@ -81,20 +101,33 @@ static int ft_positions(t_data *data, int pos_x, int pos_y)
 {
     data->empty_space = 0;
     data->nb_player_shape = 0;
-    data->tmp_empty = 0;
     data->tmp_shape = 0;
     ft_position_foreach(data, pos_x, pos_y);
     ft_strategy(data, pos_x, pos_y);
     return (1);
 }
+/*
+static void ft_choose_direction(t_data *data)
+{
 
-int ft_get_best_position(t_data *data)
+}
+*/
+void ft_get_best_position(t_data *data)
 {
     int pos_x;
     int pos_y;
 
     pos_x = 0;
     pos_y = 0;
+	data->move.left_up_x = 0;
+    data->move.left_up_y = 0;
+    data->move.right_up_x = 0;
+    data->move.right_up_y = 0;
+    data->move.left_down_x = 0;
+    data->move.left_down_y = 0;
+    data->move.right_down_x = 0;
+    data->move.right_down_y = 0;
+	ft_get_coord_piece(data);
     while (pos_y < data->xy_plateau[0] - data->max_y_piece)
     {
         pos_x = 0;
@@ -106,7 +139,7 @@ int ft_get_best_position(t_data *data)
         }
         pos_y++;
     }
-    return (1);
+//	ft_choose_direction(data);
 }
 
 void ft_display_position(t_data *data, char content)

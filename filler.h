@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 15:19:25 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/08 16:19:05 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/08 19:14:13 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ typedef struct	s_centroid
 	int			y;
 }				t_centroid;
 
+typedef struct	s_move
+{
+	int			left_up_x;
+	int         left_up_y;
+	int			ok_left_up;
+	int			right_up_x;
+	int			right_up_y;
+	int			left_down_x;
+	int			left_down_y;
+	int			right_down_x;
+	int			right_down_y;
+}				t_move;
+
 typedef struct  s_data
 {
     int         xy_plateau[2];
@@ -69,14 +82,14 @@ typedef struct  s_data
 	t_centroid  enemy_centroid;
 	int			centroid_x;
 	int			centroid_y;
+	t_move		move; 
 }               t_data;
 
 int			get_next_line(const int fd, char **line);
 int         ft_get_input(t_data *data);
 
 void ft_global_centroid(t_data *data);
-int ft_get_coord_piece(t_data *data);
-int ft_get_best_position(t_data *data);
+void ft_get_best_position(t_data *data);
 void ft_display_position(t_data *data, char content);
 int ft_get_data(t_data *data);
 

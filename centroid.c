@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 16:16:11 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/08 16:19:40 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/08 18:40:03 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ static void ft_sub_centroid(t_centroid *centroid, t_coord_4 coord[4])
     centroid->y_2 = (coord[0].y + coord[2].y + coord[3].y) / 3;
 //  dprintf(2, "x1 = %d <> y1 = %d\n", centroid->x_1, centroid->y_1);
 //  dprintf(2, "x2 = %d <> y2 = %d\n", centroid->x_2, centroid->y_2);
-    centroid->x	= (centroid->x_1 + centroid->x_2)	/ 2;
-    centroid->y = (centroid->y_1 + centroid->y_2) / 2;
-    dprintf(2, "--> x = %d <> y = %d\n", centroid->x, centroid->y);
+    centroid->x	= (float)(centroid->x_1 + centroid->x_2) / 2 + 0.5;
+    centroid->y = (float)(centroid->y_1 + centroid->y_2) / 2 + 0.5;
+//    dprintf(2, "--> x = %d <> y = %d\n", centroid->x, centroid->y);
 }
 
 void ft_global_centroid(t_data *data)
@@ -102,5 +102,5 @@ ta->enemy_coord[i].y);*/
 //  dprintf(2, "enemy_centroid --> x = %d <> y = %d\n", data->enemy_centroid.x, data->enemy_centroid.y);
     data->centroid_x = (float)(data->player_centroid.x + data->enemy_centroid.x) / 2 + 0.5;
     data->centroid_y = (float)(data->player_centroid.y + data->enemy_centroid.y) / 2 + 0.5;
-    dprintf(2, "centroid_x = %d <> centroid_y = %d\n", data->centroid_x, data->centroid_y);
+//    dprintf(2, "centroid_x = %d <> centroid_y = %d\n", data->centroid_x, data->centroid_y);
 }
