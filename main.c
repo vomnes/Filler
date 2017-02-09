@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 15:17:17 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/02 15:17:30 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/09 10:37:16 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,7 @@ int main(void)
 {
     t_data data;
 
-    data.player_shape = data.num_player == 2 ? 'X' : 'O';
     ft_get_data(&data);
-//    if (!ft_get_coord_piece(&data))
-//        return (-1);
-//    ft_printf("min_x >> %d\n", data.min_y);
-//    ft_printf("x : %d # y : %d\n", data.check_pos_x, data.check_pos_y);
-//    if (!ft_get_best_position(&data))
-//        return (-1);
     return (0);
 }
 
