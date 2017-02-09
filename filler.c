@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 17:48:20 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/08 16:19:54 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/09 10:37:00 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void ft_get_number_player(t_data *data, char *line)
                 {
                     data->num_player = line[i + 1] - '0';
                     data->player_shape = data->num_player == 2 ? 'X' : 'O';
+					data->enemy_shape = data->num_player == 2 ? 'O' : 'X';
                 }
             }
         }
@@ -146,15 +147,14 @@ static int ft_get_piece(t_data *data, char *line)
         free(str);
         data->piece[i] = NULL;
         data->ok_get_piece = 1;
-        data->final_pos_x = 0;
-        data->final_pos_y = 0;
+        data->final_x = 0;
+        data->final_y = 0;
         if (data->ok_get_piece == 1)
         {
-            ft_get_coord_piece(data);
             ft_get_best_position(data);
-            ft_putnbr(data->final_pos_y);
+            ft_putnbr(data->final_y);
             ft_putchar(' ');
-            ft_putnbr(data->final_pos_x);
+            ft_putnbr(data->final_x);
             ft_putchar('\n');
             data->nb_coord = 0;
         }

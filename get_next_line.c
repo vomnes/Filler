@@ -6,82 +6,94 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/30 18:25:46 by vomnes            #+#    #+#             */
-/*   Updated: 2017/01/25 09:01:25 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/08 09:09:13 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-# define ENDOFL	'\n'
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#define BUFF_SIZE 10
+#define NB_MAX_FD 4864
 
-int		ft_strjoinbis(char **line, char *buf)
+static int	get_remain_line(char **remain, char **line)
 {
-	char	*tmp;
+	char *new_remain;
 
-	if ((tmp = ft_strjoin(*line, buf)) == NULL)
-		return (-1);
-	free(*line);
-	*line = tmp;
-	return (1);
-}
-
-int		ft_init(char **buf, int fd, char **line)
-{
-	int ret;
-
-	if (fd < 0 || line == NULL || BUFF_SIZE < 1 || ENDOFL == '\0')
-		return (-1);
-	else
+	if ((new_remain = ft_strchr(*remain, '\n')))
 	{
-		if ((*line = (char*)malloc(sizeof(char) * 1)) == NULL)
+		new_remain[0] = '\0';
+		if (!(*line = ft_strdup(*remain)))
 			return (-1);
-	}
-	**line = '\0';
-	if (*buf == NULL)
-	{
-		if ((*buf = (char*)ft_memalloc(BUFF_SIZE + 1)) == NULL)
+		if (!(*remain = ft_strdup(new_remain + 1)))
 			return (-1);
-		if ((ret = read(fd, *buf, BUFF_SIZE)) == -1)
-			return (-1);
-		else
-			return (ret);
-	}
-	return (1);
-}
-
-int		ft_clean(char ***line, char **buf)
-{
-	if (ft_strlen(**line))
+		ft_strddel(new_remain);
 		return (1);
-	else
-	{
-		ft_strdel(*line);
-		ft_strdel(buf);
-		return (0);
 	}
+	return (0);
 }
 
-int		get_next_line(int const fd, char **line)
+static int	get_line(char *buf, char **remain, char **line)
 {
-	static char	*buf = NULL;
+	char *new_remain;
+	char *tmp;
+
+	if (!(*remain))
+		if (!(*remain = ft_strdup("\0")))
+			return (-1);
+	if ((new_remain = ft_strchr(buf, '\n')))
+	{
+		new_remain[0] = '\0';
+		tmp = *remain;
+		if (!(*line = ft_strjoin(tmp, buf)))
+			return (-1);
+		free(tmp);
+		if (!(*remain = ft_strdup(new_remain + 1)))
+			return (-1);
+		ft_strddel(new_remain);
+		return (1);
+	}
+	tmp = *remain;
+	if (!(*remain = ft_strjoin(tmp, buf)))
+		return (-1);
+	free(tmp);
+	return (0);
+}
+
+static int	last_line(char **remain, char **line)
+{
+	if ((*line = ft_strdup(*remain)))
+	{
+		if (*line[0] == '\0')
+			return (0);
+		ft_strdel(remain);
+		return (1);
+	}
+	return (0);
+}
+
+int			get_next_line(const int fd, char **line)
+{
+	static char	*remain[NB_MAX_FD];
+	char		buf[BUFF_SIZE + 1];
 	int			ret;
 
-	if (((ret = ft_init(&buf, fd, line)) == -1))
+	if (BUFF_SIZE <= 0 || fd < 0 || fd > NB_MAX_FD ||
+		!line || (read(fd, NULL, 0) == -1))
 		return (-1);
-	while (ft_strchr(buf, ENDOFL) == NULL && ret != 0)
+	if (remain[fd])
+		if (get_remain_line(&(remain[fd]), line))
+			return (1);
+	while ((ret = read(fd, (void*)buf, BUFF_SIZE)) > 0)
 	{
-		if (ft_strjoinbis(line, buf) == -1)
-			return (-1);
-		ft_memset(buf, '\0', BUFF_SIZE + 1);
-		if ((ret = read(fd, buf, BUFF_SIZE)) == -1)
-			return (-1);
+		buf[ret] = '\0';
+		if (get_line(buf, &(remain[fd]), line))
+			return (1);
 	}
-	if (ft_strchr(buf, ENDOFL))
-	{
-		*(ft_strchr(buf, ENDOFL)) = '\0';
-		if (ft_strjoinbis(line, buf) == -1)
-			return (-1);
-		ft_memmove(buf, ft_strchr(buf, 0) + 1, BUFF_SIZE - ft_strlen(buf));
-		return (1);
-	}
-	return (ft_clean(&line, &buf));
+	if (ret == -1)
+		return (-1);
+	if (remain[fd] == 0)
+		return (0);
+	return (last_line(&(remain[fd]), line) ? 1 : 0);
 }
