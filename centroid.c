@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 16:16:11 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/08 18:40:03 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/09 19:42:15 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,22 @@ void ft_global_centroid(t_data *data)
 {
 	ft_get_coord(data, data->player_coord, data->player_shape);
     ft_get_coord(data, data->enemy_coord, data->enemy_shape);
-	/*  int i = -1;
-        ft_putchar_fd('\n', 2);
-        while (++i < 4)
-            dprintf(2, "player_coord[%d].x = %d | player_coord[%d].y = %d\n", i, data->player_coord[i].x\
+//	dprintf(2, "data->player_shape ==> %c\n", data->player_shape);
+//	dprintf(2, "data->enemy_shape ==> %c\n", data->enemy_shape);
+/*	int i = -1;
+    ft_putchar_fd('\n', 2);
+    while (++i < 4)
+		dprintf(2, "player_coord[%d].x = %d | player_coord[%d].y = %d\n", i, data->player_coord[i].x\
 , i, data->player_coord[i].y);
-        i = -1;
-        while (++i < 4)
-        dprintf(2, "enemy_coord[%d].x = %d | enemy_coord[%d].y = %d\n", i, data->enemy_coord[i].x, i, da\
-ta->enemy_coord[i].y);*/
-//      ft_print_strtab(data->plateau);
-    ft_sub_centroid(&data->player_centroid, data->player_coord);
+    i = -1;
+    while (++i < 4)
+	dprintf(2, "enemy_coord[%d].x = %d | enemy_coord[%d].y = %d\n", i, data->enemy_coord[i].x, i,data->enemy_coord[i].y);*/
+//    ft_print_strtab(data->plateau);
+	ft_sub_centroid(&data->player_centroid, data->player_coord);
     ft_sub_centroid(&data->enemy_centroid, data->enemy_coord);
-//  dprintf(2, "player_centroid --> x = %d <> y = %d\n", data->player_centroid.x, data->player_centroid.y);
-//  dprintf(2, "enemy_centroid --> x = %d <> y = %d\n", data->enemy_centroid.x, data->enemy_centroid.y);
+//	dprintf(2, "player_centroid --> x = %d <> y = %d\n", data->player_centroid.x, data->player_centroid.y);
+//	dprintf(2, "enemy_centroid --> x = %d <> y = %d\n", data->enemy_centroid.x, data->enemy_centroid.y);
     data->centroid_x = (float)(data->player_centroid.x + data->enemy_centroid.x) / 2 + 0.5;
     data->centroid_y = (float)(data->player_centroid.y + data->enemy_centroid.y) / 2 + 0.5;
-//    dprintf(2, "centroid_x = %d <> centroid_y = %d\n", data->centroid_x, data->centroid_y);
+//  dprintf(2, "centroid_x = %d <--> centroid_y = %d\n", data->centroid_x, data->centroid_y);
 }

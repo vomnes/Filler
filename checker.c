@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 15:32:27 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/09 11:43:10 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/09 13:43:40 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ static void ft_strategy(t_data *data, int pos_x, int pos_y)
 {
     if (data->nb_player_shape == 1 && data->empty_space + 1 == data->nb_coord)
     {
-//		dprintf(2, "pos_x -> %d | pos_y -> %d | nb_player_shape = %d | empty_space = %d\n",
-//				pos_x, pos_y, data->nb_player_shape, data->empty_space);
         if (data->move.ok_left_up == 0)
         {
             data->move.left_up_x = pos_x;
@@ -81,11 +79,13 @@ static void ft_strategy(t_data *data, int pos_x, int pos_y)
         {
             data->move.right_up_x = pos_x;
             data->move.right_up_y = pos_y;
+            data->move.ok_right_up = 1;
         }
         if (pos_x <= data->move.left_down_x)
         {
             data->move.left_down_x = pos_x;
             data->move.left_down_y = pos_y;
+            data->move.ok_left_down = 1;
         }
         data->move.right_down_x = pos_x;
         data->move.right_down_y = pos_y;
@@ -102,72 +102,6 @@ static int ft_positions(t_data *data, int pos_x, int pos_y)
     return (1);
 }
 
-static int ft_choose_direction(t_data *data)
-{
-	int x0;
-	int y0;
-	int x1;
-	int y1;
-
-	x0 = data->player_centroid.x;
-	y0 = data->player_centroid.y;
-	x1 = data->enemy_centroid.x;
-	y1 = data->enemy_centroid.y;
-	if (x1 == x0 && y1 < y0) // Up
-	{
-		ft_putendl_fd("UP", 2);
-	}
-	if (x1 > x0 && y1 < y0) //Up right
-	{
-		data->final_x = data->move.right_down_x;
-		data->final_y = data->move.right_down_y;
-		ft_putendl_fd("DOWN R", 2);
-		return (1);
-	}
-	if (x1 > x0 && y1 == y0) // Right
-	{
-		ft_putendl_fd("RIGHT", 2);
-	}
-	if (x1 > x0 && y1 > y0) //Down right
-	{
-		data->final_x = data->move.right_up_x;
-		data->final_y = data->move.right_up_y;
-		ft_putendl_fd("UP R", 2);
-		return (1);
-	}
-	if (x1 == x0 && y1 > y0) // Down
-	{
-		ft_putendl_fd("DOWN", 2);
-	}
-	if (x1 < x0 && y1 > y0) //Down left
-	{
-		data->final_x = data->move.left_up_x;
-		data->final_y = data->move.left_up_y;
-		ft_putendl_fd("UP L", 2);
-		return (1);
-	}
-	if (x1 < x0 && y1 == y0) // Left
-	{
-		ft_putendl_fd("LEFT", 2);
-	}
-	if (x1 < x0 && y1 < y0)//Up left
-	{
-		data->final_x = data->move.left_down_x;
-		data->final_y = data->move.left_down_y;
-		ft_putendl_fd("DOWN L", 2);
-		return (1);
-	}
-	data->final_x = data->move.left_up_x;
-	data->final_y = data->move.left_up_y;
-	data->final_x = data->move.right_up_x;
-	data->final_y = data->move.right_up_y;
-	data->final_x = data->move.left_down_x;
-	data->final_y = data->move.left_down_y;
-	data->final_x = data->move.right_down_x;
-	data->final_y = data->move.right_down_y;
-	return (0);
-}
-
 void ft_get_best_position(t_data *data)
 {
     int pos_x;
@@ -179,16 +113,14 @@ void ft_get_best_position(t_data *data)
     data->move.left_up_y = 0;
     data->move.right_up_x = 0;
     data->move.right_up_y = 0;
+    data->move.ok_right_up = 0;
     data->move.left_down_x = data->xy_plateau[1];
     data->move.left_down_y = 0;
+    data->move.ok_left_down = 0;
     data->move.right_down_x = 0;
     data->move.right_down_y = 0;
 	data->move.ok_left_up = 0;
 	ft_get_coord_piece(data);
-	ft_global_pos(&data->player_pos, data->player_centroid, data);
-	ft_global_pos(&data->enemy_pos, data->enemy_centroid, data);
-	dprintf(2, "data->player_pos.x = %2d | data->player_pos.y = %2d\n", data->player_pos.x, data->player_pos.y);
-	dprintf(2, "data->enemy_pos.x  = %2d | data->enemy_pos.y  = %2d\n", data->enemy_pos.x, data->enemy_pos.y);
     while (pos_y < data->xy_plateau[0] - data->max_y_piece)
     {
         pos_x = 0;
@@ -200,10 +132,10 @@ void ft_get_best_position(t_data *data)
         }
         pos_y++;
     }
-/*	dprintf(2, "data->move.left_up_x : %d - data->move.left_up_y : %d\n", data->move.left_up_x, data->move.left_up_y);
+	dprintf(2, "\ndata->move.left_up_x : %d - data->move.left_up_y : %d\n", data->move.left_up_x, data->move.left_up_y);
 	dprintf(2, "data->move.right_up_x : %d - data->move.right_up_y : %d\n", data->move.right_up_x, data->move.right_up_y);
 	dprintf(2, "data->move.left_down_x : %d - data->move.left_down_y : %d\n", data->move.left_down_x, data->move.left_down_y);
-	dprintf(2, "data->move.right_down_x : %d - data->move.right_down_y : %d\n", data->move.right_down_x, data->move.right_down_y);*/
+	dprintf(2, "data->move.right_down_x : %d - data->move.right_down_y : %d\n", data->move.right_down_x, data->move.right_down_y);
 	ft_choose_direction(data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 15:19:25 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/08 19:14:13 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/09 13:33:08 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,22 @@ typedef struct	s_move
 {
 	int			left_up_x;
 	int         left_up_y;
-	int			ok_left_up;
+	short		ok_left_up;
 	int			right_up_x;
 	int			right_up_y;
+    short		ok_right_up;
 	int			left_down_x;
 	int			left_down_y;
+    short		ok_left_down;
 	int			right_down_x;
 	int			right_down_y;
 }				t_move;
+
+typedef struct	s_global
+{
+	int			x;
+	int			y;
+}				t_global;
 
 typedef struct  s_data
 {
@@ -65,8 +73,8 @@ typedef struct  s_data
     int         min_y;
     int         ok_min_y;
     t_coord     *coord;
-    int         final_pos_x;
-    int         final_pos_y;
+    int         final_x;
+    int         final_y;
     char        player_shape;
 	char		enemy_shape;
     int         empty_space;
@@ -82,13 +90,17 @@ typedef struct  s_data
 	t_centroid  enemy_centroid;
 	int			centroid_x;
 	int			centroid_y;
-	t_move		move; 
+	t_move		move;
+	t_global	p_pos;
+	t_global	e_pos;
 }               t_data;
 
 int			get_next_line(const int fd, char **line);
 int         ft_get_input(t_data *data);
+void        ft_print_strtab(char **tab);
 
 void ft_global_centroid(t_data *data);
+int         ft_choose_direction(t_data *data);
 void ft_get_best_position(t_data *data);
 void ft_display_position(t_data *data, char content);
 int ft_get_data(t_data *data);

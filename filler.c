@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 17:48:20 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/09 10:37:00 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/09 19:33:57 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void ft_print_strtab(char **tab)
 
     i = 0;
     while (tab[i] != NULL)
-        ft_putendl_fd(tab[i++], 2);
+	{
+        ft_putendl_fd(tab[i], 2);
+		i++;
+	}
 }
 
 void ft_free_strtab(char **tab)
@@ -96,16 +99,14 @@ static int ft_get_plateau(t_data *data, char *line)
         while (i < data->xy_plateau[0])
         {
             get_next_line(0, &str);
-            if (ft_strchr(str, data->player_shape) && data->ok_min_y == 0)
-            {
-                data->min_y = i;
-                data->ok_min_y = 1;
-            }
+//			ft_putchar_fd('>', 2);
             data->plateau[i] = ft_strdup(ft_strchr(str, ' ') + 1);
+//            dprintf(2, "|%s\n", data->plateau[i]);
             i++;
         }
         free(str);
         data->plateau[i] = NULL;
+//        ft_print_strtab(data->plateau);
 		ft_global_centroid(data);
     }
     return (0);
