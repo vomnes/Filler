@@ -16,6 +16,11 @@
 # include "libft.h"
 # include "ft_printf.h"
 
+# define LEFT_UP 1
+# define RIGHT_UP 2
+# define LEFT_DOWN 3
+# define RIGHT_DOWN 4
+
 typedef struct  s_coord
 {
     int         x;
@@ -98,11 +103,16 @@ typedef struct  s_data
 int			get_next_line(const int fd, char **line);
 int         ft_get_input(t_data *data);
 void        ft_print_strtab(char **tab);
-
+void ft_select_dir(t_data *data, int select);
+int ft_direction_pos(t_data *data);
+int ft_get_piece(t_data *data, char *line);
+void ft_gnl_tab_free(char **tab, int *i, int precision);
+void ft_free_strtab(char **tab);
+void ft_get_xy(char *input, int *stock);
 void ft_global_centroid(t_data *data);
 int         ft_choose_direction(t_data *data);
 void ft_get_best_position(t_data *data);
 void ft_display_position(t_data *data, char content);
-int ft_get_data(t_data *data);
+int ft_run_filler(t_data *data);
 
 #endif

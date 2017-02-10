@@ -16,7 +16,8 @@ int main(void)
 {
     t_data data;
 
-    ft_get_data(&data);
+    if (ft_run_filler(&data) == -1)
+      return (-1);
     return (0);
 }
 
