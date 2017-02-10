@@ -66,70 +66,70 @@ int			ft_choose_direction(t_data *d)
     y0 = d->player_centroid.y;
     x1 = d->enemy_centroid.x;
     y1 = d->enemy_centroid.y;
-	ft_global_pos(&d->p_pos, d->player_centroid, d);
+		ft_global_pos(&d->p_pos, d->player_centroid, d);
     ft_global_pos(&d->e_pos, d->enemy_centroid, d);
-    dprintf(2, "data->player_pos.x = %2d | data->player_pos.y = %2d\n", d->p_pos.x, d->p_pos.y);
-    dprintf(2, "data->enemy_pos.x  = %2d | data->enemy_pos.y  = %2d\n", d->e_pos.x, d->e_pos.y);
-	if ((x1 > x0 && y1 < y0) || (d->p_pos.x == -1 && d->p_pos.y == 1 && d->e_pos.x == 1 && d->e_pos.y == 1))
+//    dprintf(2, "data->player_pos.x = %2d | data->player_pos.y = %2d\n", d->p_pos.x, d->p_pos.y);
+//    dprintf(2, "data->enemy_pos.x  = %2d | data->enemy_pos.y  = %2d\n", d->e_pos.x, d->e_pos.y);
+		if ((x1 > x0 && y1 < y0) || (d->p_pos.x == -1 && d->p_pos.y == 1 && d->e_pos.x == 1 && d->e_pos.y == 1))
     {
-		ft_dir(d, RIGHT_UP);
-        ft_putendl_fd("DOWN R", 2);
+				ft_dir(d, RIGHT_UP);
+    //    ft_putendl_fd("DOWN R", 2);
         return (1);
     }
-	if (x1 > x0 && y1 > y0) //Down right
+		if (x1 > x0 && y1 > y0) //Down right
     {
-		ft_dir(d, RIGHT_DOWN);
-        ft_putendl_fd("UP R", 2);
+				ft_dir(d, RIGHT_DOWN);
+    //    ft_putendl_fd("UP R", 2);
         return (1);
     }
     if (x1 == x0 && y1 < y0) // Up
     {
-		if (d->p_pos.x == -1)
-			ft_dir(d, RIGHT_UP);
-		else
-			ft_dir(d, LEFT_UP);
-        ft_putendl_fd("UP", 2);
-		return (1);
+				if (d->p_pos.x == -1)
+					ft_dir(d, RIGHT_UP);
+				else
+					ft_dir(d, LEFT_UP);
+    //    ft_putendl_fd("UP", 2);
+				return (1);
     }
     if (x1 > x0 && y1 == y0) // Right
     {
-		if (d->p_pos.y == -1)
-			ft_dir(d, RIGHT_DOWN);
-		else
-			ft_dir(d, RIGHT_UP);
-        ft_putendl_fd("RIGHT", 2);
-		return (1);
+				if (d->p_pos.y == -1)
+					ft_dir(d, RIGHT_DOWN);
+				else
+					ft_dir(d, RIGHT_UP);
+    //    ft_putendl_fd("RIGHT", 2);
+				return (1);
     }
     if (x1 == x0 && y1 > y0) // Down
     {
-		if (d->p_pos.x == -1)
-			ft_dir(d, RIGHT_DOWN);
-		else
-			ft_dir(d, LEFT_DOWN);
-        ft_putendl_fd("DOWN", 2);
-		return (1);
+				if (d->p_pos.x == -1)
+					ft_dir(d, RIGHT_DOWN);
+				else
+					ft_dir(d, LEFT_DOWN);
+    //    ft_putendl_fd("DOWN", 2);
+				return (1);
     }
     if (x1 < x0 && y1 > y0) //Down left
     {
-		ft_dir(d, LEFT_DOWN);
-        ft_putendl_fd("UP L", 2);
+				ft_dir(d, LEFT_DOWN);
+    //    ft_putendl_fd("UP L", 2);
         return (1);
     }
     if (x1 < x0 && y1 == y0) // Left
     {
-		if (d->p_pos.y == -1)
-			ft_dir(d, LEFT_DOWN);
-		else
-			ft_dir(d, LEFT_UP);
-        ft_putendl_fd("LEFT", 2);
-		return (1);
+				if (d->p_pos.y == -1)
+						ft_dir(d, LEFT_DOWN);
+				else
+						ft_dir(d, LEFT_UP);
+    //    ft_putendl_fd("LEFT", 2);
+				return (1);
     }
     if (x1 < x0 && y1 < y0)//Up left
     {
-		ft_dir(d, LEFT_UP);
-        ft_putendl_fd("DOWN L", 2);
+				ft_dir(d, LEFT_UP);
+    //    ft_putendl_fd("DOWN L", 2);
         return (1);
-    }
+  	}
 	if (x1 == x0 && y1 == y0)
 	{
 		if (d->p_pos.x == -1 && d->p_pos.y == -1)
@@ -140,9 +140,9 @@ int			ft_choose_direction(t_data *d)
 			ft_dir(d, RIGHT_UP);
 		else if (d->p_pos.x == -1 && d->p_pos.y == 1)
 			ft_dir(d, LEFT_UP);
-		ft_putendl_fd("Equality", 2);
+		//ft_putendl_fd("Equality", 2);
 		return (1);
 	}
-	ft_putendl_fd("ERROR /!\\", 2);
-    return (0);
+	//ft_putendl_fd("ERROR /!\\", 2);
+  return (0);
 }

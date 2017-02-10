@@ -109,7 +109,7 @@ void ft_get_best_position(t_data *data)
 
     pos_x = 0;
     pos_y = 0;
-	data->move.left_up_x = 0;
+	  data->move.left_up_x = 0;
     data->move.left_up_y = 0;
     data->move.right_up_x = 0;
     data->move.right_up_y = 0;
@@ -119,8 +119,8 @@ void ft_get_best_position(t_data *data)
     data->move.ok_left_down = 0;
     data->move.right_down_x = 0;
     data->move.right_down_y = 0;
-	data->move.ok_left_up = 0;
-	ft_get_coord_piece(data);
+	  data->move.ok_left_up = 0;
+	   ft_get_coord_piece(data);
     while (pos_y < data->xy_plateau[0] - data->max_y_piece)
     {
         pos_x = 0;
@@ -132,10 +132,10 @@ void ft_get_best_position(t_data *data)
         }
         pos_y++;
     }
-	dprintf(2, "\ndata->move.left_up_x : %d - data->move.left_up_y : %d\n", data->move.left_up_x, data->move.left_up_y);
+/*	dprintf(2, "\ndata->move.left_up_x : %d - data->move.left_up_y : %d\n", data->move.left_up_x, data->move.left_up_y);
 	dprintf(2, "data->move.right_up_x : %d - data->move.right_up_y : %d\n", data->move.right_up_x, data->move.right_up_y);
 	dprintf(2, "data->move.left_down_x : %d - data->move.left_down_y : %d\n", data->move.left_down_x, data->move.left_down_y);
-	dprintf(2, "data->move.right_down_x : %d - data->move.right_down_y : %d\n", data->move.right_down_x, data->move.right_down_y);
+	dprintf(2, "data->move.right_down_x : %d - data->move.right_down_y : %d\n", data->move.right_down_x, data->move.right_down_y);*/
 	ft_choose_direction(data);
 }
 

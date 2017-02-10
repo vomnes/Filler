@@ -84,7 +84,7 @@ static void ft_sub_centroid(t_centroid *centroid, t_coord_4 coord[4])
 
 void ft_global_centroid(t_data *data)
 {
-	ft_get_coord(data, data->player_coord, data->player_shape);
+	  ft_get_coord(data, data->player_coord, data->player_shape);
     ft_get_coord(data, data->enemy_coord, data->enemy_shape);
 //	dprintf(2, "data->player_shape ==> %c\n", data->player_shape);
 //	dprintf(2, "data->enemy_shape ==> %c\n", data->enemy_shape);
@@ -97,7 +97,7 @@ void ft_global_centroid(t_data *data)
     while (++i < 4)
 	dprintf(2, "enemy_coord[%d].x = %d | enemy_coord[%d].y = %d\n", i, data->enemy_coord[i].x, i,data->enemy_coord[i].y);*/
 //    ft_print_strtab(data->plateau);
-	ft_sub_centroid(&data->player_centroid, data->player_coord);
+	  ft_sub_centroid(&data->player_centroid, data->player_coord);
     ft_sub_centroid(&data->enemy_centroid, data->enemy_coord);
 //	dprintf(2, "player_centroid --> x = %d <> y = %d\n", data->player_centroid.x, data->player_centroid.y);
 //	dprintf(2, "enemy_centroid --> x = %d <> y = %d\n", data->enemy_centroid.x, data->enemy_centroid.y);
