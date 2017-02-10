@@ -52,7 +52,7 @@ static int	ft_get_plateau(t_data *data, char *line)
 		get_next_line(0, &new);
 		ft_strddel(new);
 		while (++i < data->xy_plateau[0])
-			ft_gnl_tab_free(data->plateau, &i, 4);
+			ft_gnl_tab_free(data->plateau, &i, 4); //
 		free(str);
 		str = NULL;
 		data->plateau[i] = NULL;
