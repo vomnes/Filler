@@ -94,7 +94,7 @@ static int ft_get_plateau(t_data *data, char *line)
         * (data->xy_plateau[0] + 1))))
             return (-1);
         get_next_line(0, &new);
-        free(new);
+        ft_strddel(new);
         while (i < data->xy_plateau[0])
         {
           ft_gnl_tab_free(data->plateau, &i, 4);
@@ -140,10 +140,8 @@ void ft_free_strtab(char **tab)
 static int ft_get_piece(t_data *data, char *line)
 {
     int i;
-    char *str;
 
     i = 0;
-    str = NULL;
     if ((ft_strstr(line, "Piece")))
     {
         ft_get_xy(line, data->xy_piece);
@@ -156,8 +154,6 @@ static int ft_get_piece(t_data *data, char *line)
             ft_count_coord(data->piece[i], data);
             i++;
         }
-        free(str);
-        str = NULL;
         data->piece[i] = NULL;
         data->final_x = 0;
         data->final_y = 0;
@@ -169,6 +165,7 @@ static int ft_get_piece(t_data *data, char *line)
         data->nb_coord = 0;
         ft_free_strtab(data->plateau);
         ft_free_strtab(data->piece);
+        data->piece = NULL;
         free(data->coord);
         data->coord = NULL;
     }
@@ -186,8 +183,10 @@ int ft_get_data(t_data *data)
         data->empty_space = 0;
         data->nb_player_shape = 0;
         ft_get_number_player(data, line);
-        ft_get_plateau(data, line);
-        ft_get_piece(data, line);
+        if (ft_get_plateau(data, line) == -1)
+          return (-1);
+        if (ft_get_piece(data, line) == -1)
+          return (-1);
         data->empty_space = 0;
     }
     free(line);

@@ -14,7 +14,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#define BUFF_SIZE 10
+#define BUFF_SIZE 1
 #define NB_MAX_FD 4864
 
 static int	get_remain_line(char **remain, char **line)
