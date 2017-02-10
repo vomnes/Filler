@@ -6,13 +6,13 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/10 16:36:28 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/10 16:36:30 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/10 18:40:57 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "filler.h"
+#include "filler.h"
 
-void ft_select_dir(t_data *data, int select)
+void	ft_select_dir(t_data *data, int select)
 {
 	if (select == LEFT_UP)
 	{

@@ -6,26 +6,20 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 15:17:17 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/09 10:37:16 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/10 18:42:55 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "filler.h"
+#include "filler.h"
 
-int main(void)
+int	main(void)
 {
-    t_data data;
+	t_data data;
 
-    if (ft_run_filler(&data) == -1)
-      return (-1);
-    return (0);
+	if (ft_run_filler(&data) == -1)
+		return (-1);
+	return (0);
 }
-
-//    ft_display_position(&data, data.player_shape + 32);
-//    ft_print_strtab(data.plateau);
-
-//data->plateau[y][x]
-//data->piece[k][z]
 
 /*
 Plateau 15 17:
