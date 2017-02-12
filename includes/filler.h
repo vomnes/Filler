@@ -15,6 +15,10 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include <../minilibx_macos/mlx.h>
+
+# define KEY_Q 12
+# define KEY_ESCAPE 53
 
 # define LEFT_UP 1
 # define RIGHT_UP 2
@@ -67,6 +71,17 @@ typedef struct	s_global
 	int			y;
 }				t_global;
 
+typedef struct	s_graphics
+{
+	void *mlx;
+	void *win;
+	char *mlx_data;
+	void *img;
+	int 	bits_per_pixel;
+	int size_line;
+	int endian;
+}								t_graphics;
+
 typedef struct	s_data
 {
 	int			xy_plateau[2];
@@ -97,6 +112,7 @@ typedef struct	s_data
 	t_move		move;
 	t_global	p_pos;
 	t_global	e_pos;
+	t_graphics img;
 }				t_data;
 
 typedef struct	s_coord_piece
@@ -121,5 +137,6 @@ void			ft_get_best_position(t_data *data);
 void			ft_display_position(t_data *data, char content);
 int				ft_run_filler(t_data *data);
 void			ft_get_best_position(t_data *data);
+int 			ft_graphics(t_data *data);
 
 #endif
