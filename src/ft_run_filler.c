@@ -57,6 +57,7 @@ static int	ft_get_plateau(t_data *data, char *line)
 		str = NULL;
 		data->plateau[i] = NULL;
 		ft_global_centroid(data);
+		ft_graphics(data);
 	}
 	free(line);
 	line = NULL;

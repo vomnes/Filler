@@ -12,12 +12,23 @@
 
 #include "filler.h"
 
+static int		ft_exit(int keycode)
+{
+	if (keycode == KEY_ESCAPE || keycode == KEY_Q)
+		exit(0);
+  return (0);
+}
+
 int	main(void)
 {
 	t_data data;
 
+	data->img.mlx = mlx_init();
+	data->img.win = mlx_new_window(data->img.mlx, 1000, 1000, "Filler");
 	if (ft_run_filler(&data) == -1)
 		return (-1);
+	mlx_key_hook(data.img.win, ft_exit, 0);
+	mlx_loop(data.img.mlx);
 	return (0);
 }
 

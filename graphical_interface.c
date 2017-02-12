@@ -1,13 +1,6 @@
 
 # include "filler.h"
 
-static int		ft_exit(int keycode)
-{
-	if (keycode == KEY_ESCAPE || keycode == KEY_Q)
-		exit(0);
-  return (0);
-}
-
 void	ft_mem_pixel_img(char *mlx_data, int *size_line, unsigned int x, unsigned int y, int color)
 {
 	unsigned int *index;
@@ -64,43 +57,32 @@ static void ft_color(int *color, char **tab, int *i, int *k)
 		*color = 0x001A535C;
 }
 
-int main()
+int ft_graphics(t_data *data)
 {
   int color;
-	void *mlx;
-	void *win;
-	char *mlx_data;
-	void *img;
-	int bits_per_pixel;
-	int size_line;
-	int endian;
 	int y;
   int x;
 
-	char **tab = ft_strsplit("..XXOOXX..XXOOXX\n..XXOOXX..XXOOXX\n..XXOOXX..XXOOXX\n..XXOOXX..XXOOXX\n", '\n');
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 600, 600, "Filler");
-
-	img = mlx_new_image(mlx, 600, 600);
-	mlx_data = mlx_get_data_addr(img, &bits_per_pixel, &size_line, &endian);
-//	mlx_clear_window(mlx, win);
+	data->img.img = mlx_new_image(data->img.mlx, 1000, 1000);
+	data->img.mlx_data = mlx_get_data_addr(data->img.img,
+	&data->img.bits_per_pixel, &data->img.size_line, &data->img.endian);
 	y = 0;
 	x = 0;
 	color = 0;
-	while (tab[y])
+	while (data->plateau[y])
 	{
 		x = 0;
-		while (tab[y][x])
+		while (data->plateau[y][x])
 		{
-			ft_color(&color, tab, &x, &y);
-			ft_draw_rectangle(x * 20, y * 20, x * 20 + 20, y * 20 + 20,
-			mlx_data, &size_line, color);
+			ft_color(&color, data->plateau, &x, &y);
+			ft_draw_rectangle(x * 5, y * 5, x * 5 + 5, y * 5 + 5,
+			data->img.mlx_data, &data->img.size_line, color);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mlx, win, img, 0, 0);
-	mlx_key_hook(win, ft_exit, 0);
-	mlx_loop(mlx);
+	mlx_clear_window(data->img.mlx, data->img.win); // Expose hook ??
+	mlx_put_image_to_window(data->img.mlx, data->img.win, data->img.img, 0, 0);
+	mlx_destroy_image(data->img.mlx, data->img.img);
   return (0);
 }
