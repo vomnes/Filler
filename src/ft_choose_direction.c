@@ -30,6 +30,8 @@ int			ft_choose_direction(t_data *data)
 {
 	ft_global_pos(&data->p_pos, data->player_centroid, data);
 	ft_global_pos(&data->e_pos, data->enemy_centroid, data);
+//	dprintf(2, "data->p_pos.x : %d - data->p_pos.y : %d\n", data->p_pos.x, data->p_pos.y);
+//	dprintf(2, "data->e_pos.x : %d - data->e_pos.y : %d\n", data->e_pos.x, data->e_pos.y);
 	ft_direction_pos(data);
 	return (0);
 }

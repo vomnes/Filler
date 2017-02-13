@@ -31,6 +31,7 @@ static void	ft_get_number_player(t_data *data, char *line)
 					data->enemy_shape = data->num_player == 2 ? 'O' : 'X';
 				}
 			}
+			data->flag_dir = 0;
 		}
 	}
 }
@@ -57,7 +58,6 @@ static int	ft_get_plateau(t_data *data, char *line)
 		str = NULL;
 		data->plateau[i] = NULL;
 		ft_global_centroid(data);
-		ft_graphics(data);
 	}
 	free(line);
 	line = NULL;
