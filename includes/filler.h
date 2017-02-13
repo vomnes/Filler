@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include "ft_printf.h"
-# include <../minilibx_macos/mlx.h>
 
 # define KEY_Q 12
 # define KEY_ESCAPE 53
@@ -113,6 +112,7 @@ typedef struct	s_data
 	t_global	p_pos;
 	t_global	e_pos;
 	t_graphics img;
+	int 			flag_dir;
 }				t_data;
 
 typedef struct	s_coord_piece
