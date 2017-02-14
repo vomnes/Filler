@@ -1,8 +1,8 @@
 NAME = filler
 SRC = ./src/centroid.c ./src/ft_choose_direction.c ./src/ft_direction_pos.c \
 ./src/ft_free_tab.c ./src/ft_get_best_position.c ./src/ft_get_piece.c \
-./src/ft_get_xy.c ./src/ft_gnl_tab_free.c ./src/ft_run_filler.c \
-./src/ft_select_dir.c ./src/get_next_line.c ./src/main.c
+./src/ft_get_xy.c ./src/ft_run_filler.c ./src/ft_select_dir.c \
+./src/get_next_line.c ./src/main.c
 OBJ = $(SRC:.c=.o)
 
 MAKE = make

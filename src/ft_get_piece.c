@@ -42,6 +42,17 @@ static void	ft_end_output(t_data *data)
 	data->coord = NULL;
 }
 
+static void	ft_gnl_free(char **tab, int *i)
+{
+	char *str;
+
+	str = NULL;
+	get_next_line(0, &str);
+	tab[*i] = ft_strdup(str);
+	free(str);
+	str = NULL;
+}
+
 int			ft_get_piece(t_data *data, char *line)
 {
 	int i;
@@ -55,7 +66,7 @@ int			ft_get_piece(t_data *data, char *line)
 			return (-1);
 		while (i < data->xy_piece[0])
 		{
-			ft_gnl_tab_free(data->piece, &i, 0);
+			ft_gnl_free(data->piece, &i);
 			ft_count_coord(data->piece[i], data);
 			i++;
 		}
