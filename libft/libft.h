@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:09:57 by vomnes            #+#    #+#             */
-/*   Updated: 2017/01/25 18:04:48 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/14 12:18:33 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ t_list				*ft_lst_strsplit(char const *s, char c);
 void				ft_swap(int *a, int *b);
 int					ft_isupper(int c);
 int					ft_min(int x, int y, int z);
-int		ft_hex_to_dec(char *hex);
-int		ft_pow(int nb, int power);
+int					ft_hex_to_dec(char *hex);
+int					ft_pow(int nb, int power);
 
 char				*ft_strnjoin(char const *s1, char const *s2, size_t n);
 size_t				ft_index_occ(const char *s, int c);

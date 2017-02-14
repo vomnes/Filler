@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 15:19:25 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/14 10:41:13 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/14 12:16:38 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,6 @@ typedef struct	s_global
 	int			y;
 }				t_global;
 
-typedef struct	s_graphics
-{
-	void *mlx;
-	void *win;
-	char *mlx_data;
-	void *img;
-	int 	bits_per_pixel;
-	int size_line;
-	int endian;
-}								t_graphics;
-
 typedef struct	s_data
 {
 	int			xy_plateau[2];
@@ -110,8 +99,7 @@ typedef struct	s_data
 	t_move		move;
 	t_global	p_pos;
 	t_global	e_pos;
-	t_graphics img;
-	int 			flag_dir;
+	int			flag_dir;
 }				t_data;
 
 typedef struct	s_coord_piece
@@ -122,20 +110,15 @@ typedef struct	s_coord_piece
 }				t_coord_piece;
 
 int				get_next_line(const int fd, char **line);
-int				ft_get_input(t_data *data);
-void			ft_print_strtab(char **tab);
-void			ft_select_dir(t_data *data, int select);
-int				ft_direction_pos(t_data *data);
-int				ft_get_piece(t_data *data, char *line);
-void			ft_gnl_tab_free(char **tab, int *i, int precision);
-void			ft_free_strtab(char **tab);
 void			ft_get_xy(char *input, int *stock);
+int				ft_get_piece(t_data *data, char *line);
 void			ft_global_centroid(t_data *data);
+void			ft_select_dir(t_data *data, int select);
+int				ft_spe_dir(t_data *data);
+int				ft_direction_pos(t_data *data);
 int				ft_choose_direction(t_data *data);
 void			ft_get_best_position(t_data *data);
-void			ft_display_position(t_data *data, char content);
+void			ft_free_strtab(char **tab);
 int				ft_run_filler(t_data *data);
-void			ft_get_best_position(t_data *data);
-int 			ft_graphics(t_data *data);
 
 #endif

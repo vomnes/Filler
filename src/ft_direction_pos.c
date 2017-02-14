@@ -104,44 +104,8 @@ static int	ft_dir_equality(t_data *data)
 
 int			ft_direction_pos(t_data *data)
 {
-	if (data->e_pos.x == -1 && data->e_pos.y == -1 &&
-	data->p_pos.x == 1 && data->e_pos.y == -1)
-	{
-		if (data->flag_dir < 40)
-		{
-			if (data->flag_dir % 6 == 0)
-				ft_select_dir(data, LEFT_UP);
-			else
-				ft_select_dir(data, LEFT_DOWN);
-		}
-		else
-			ft_select_dir(data, LEFT_UP);
-		data->flag_dir++;
-		ft_putendl_fd("In", 2);
+	if (ft_spe_dir(data))
 		return (1);
-	}
-	if (data->e_pos.x == -1 && data->e_pos.y == 1 &&
-	data->p_pos.x == 1 && data->e_pos.y == 1 && data->flag_dir < 15)
-	{
-		/*if (data->flag_dir % 2 == 0)
-			ft_select_dir(data, LEFT_UP);
-		else*/
-			ft_select_dir(data, RIGHT_UP);
-		data->flag_dir++;
-		return (1);
-	}
-	if (data->e_pos.x == 1 && data->e_pos.y == -1 &&
-	data->p_pos.x == 1 && data->e_pos.y == -1)
-	{
-		ft_select_dir(data, LEFT_UP);
-		return (1);
-	}
-	if (data->e_pos.x == -1 && data->e_pos.y == -1 &&
-	data->p_pos.x == -1 && data->e_pos.y == -1)
-	{
-			ft_select_dir(data, RIGHT_UP);
-			return (1);
-	}
 	if (ft_dir_one(data))
 		return (1);
 	if (ft_dir_two(data))
