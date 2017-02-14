@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 15:19:25 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/14 10:41:13 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/10 18:52:13 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FILLER_H
 
 # include "libft.h"
+# include "ft_printf.h"
 
 # define KEY_Q 12
 # define KEY_ESCAPE 53
