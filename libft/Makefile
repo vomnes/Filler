@@ -32,7 +32,7 @@ $(NAME):	$(OBJET)
 
 %.o : %.c
 			@echo "$(NAME) >>> Add/Update $^"
-
+			
 clean:
 			@echo Clean objects
 			@rm -rf $(OBJET)

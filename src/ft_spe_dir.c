@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/14 11:58:58 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/14 11:59:00 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/15 12:51:49 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_dir_one(t_data *data)
 {
 	if (data->e_pos.x == -1 && data->e_pos.y == -1 &&
-	data->p_pos.x == 1 && data->e_pos.y == -1)
+	data->p_pos.x == 1 && data->e_pos.y == -1 && data->xy_plateau[1] < 50)
 	{
 		if (data->flag_dir < 40)
 		{
@@ -35,20 +35,21 @@ static int	ft_dir_one(t_data *data)
 static int	ft_dir_two(t_data *data)
 {
 	if (data->e_pos.x == -1 && data->e_pos.y == 1 &&
-	data->p_pos.x == 1 && data->e_pos.y == 1 && data->flag_dir < 15)
+	data->p_pos.x == 1 && data->e_pos.y == 1 && data->flag_dir < 15 &&
+	data->xy_plateau[1] < 50)
 	{
 		ft_select_dir(data, RIGHT_UP);
 		data->flag_dir++;
 		return (1);
 	}
 	if (data->e_pos.x == 1 && data->e_pos.y == -1 &&
-	data->p_pos.x == 1 && data->e_pos.y == -1)
+	data->p_pos.x == 1 && data->e_pos.y == -1 && data->xy_plateau[1] < 50)
 	{
 		ft_select_dir(data, LEFT_UP);
 		return (1);
 	}
 	if (data->e_pos.x == -1 && data->e_pos.y == -1 &&
-	data->p_pos.x == -1 && data->e_pos.y == -1)
+	data->p_pos.x == -1 && data->e_pos.y == -1 && data->xy_plateau[1] < 50)
 	{
 		ft_select_dir(data, RIGHT_UP);
 		return (1);
