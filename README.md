@@ -13,10 +13,10 @@ inputs/outputs.
 ```
 
 ### Filler
-![alt text](https://github.com/vomnes/push_swap/blob/master/screenshot/demo.png "Filler")
+![alt text](https://github.com/vomnes/Filler/blob/master/screenshot/demo.png "Filler")
 
 ### Start
-![alt text](https://github.com/vomnes/push_swap/blob/master/screenshot/start.png "Start")
+![alt text](https://github.com/vomnes/Filler/blob/master/screenshot/start.png "Start")
 
-### Visual
-![alt text](https://github.com/vomnes/push_swap/blob/master/screenshot/end_winner.png "End Winner")
+### End - Winner
+![alt text](https://github.com/vomnes/Filler/blob/master/screenshot/end_winner.png "End Winner")
