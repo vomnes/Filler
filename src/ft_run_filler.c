@@ -6,7 +6,7 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/10 18:31:49 by vomnes            #+#    #+#             */
-/*   Updated: 2017/02/10 18:39:13 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/02/15 12:52:46 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_get_number_player(t_data *data, char *line)
 	data->num_player = 0;
 	if (line[0] == '$')
 	{
-		if (ft_strstr(line, "/filler]"))
+		if (ft_strstr(line, "vomnes.filler"))
 		{
 			while (line[i++])
 			{
